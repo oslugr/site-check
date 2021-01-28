@@ -1,8 +1,10 @@
 #!/bin/bash
 
 WEBS=( "" )
-MAIL=""
+MAIL=( "" )
 ARCHIVO=""
+
+touch $ARCHIVO
 
 for i in "${WEBS[@]}"
 do
@@ -19,9 +21,11 @@ do
         else
             echo "$i - MAL"
             printf "$i\n" > $ARCHIVO
-            echo -e "Subject: $i se ha caído\n\n Mensaje de log:\n\n$SALIDA" | sendmail -v $MAIL
-        fi
-    fi 
+
+            for j in "${MAIL[@]}"
+            do
+                echo -e "Subject: $i se ha caído\n\n Mensaje de log:\n\n$SALIDA" | sendmail -v $j
+            done
         fi
     fi 
 
